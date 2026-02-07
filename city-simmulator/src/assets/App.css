@@ -1,5 +1,17 @@
 @import './index.css';
 
+html, body {
+  margin: 0;  
+}
+
 footer {
   background-color: var(--background1);
+  color: var(--text-invert);
+  text-align: center;
+  padding: 20px;
+}
+
+button {
+  background-color: transparent;
+  border: none;
 }

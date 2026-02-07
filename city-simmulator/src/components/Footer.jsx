@@ -9,7 +9,7 @@ export default function Footer() {
     document.body.classList.toggle('darkmode', isDark);
     document.body.classList.toggle('lightmode', !isDark);
   };
-  
+
   useEffect(() => {
     const storedDarkmode = Cookies.get('darkmode') === 'on';
     setDarkMode(storedDarkmode);

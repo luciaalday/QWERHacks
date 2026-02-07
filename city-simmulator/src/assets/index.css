@@ -2,19 +2,11 @@
 
 :root {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  
+  --cherry: #893045;
+  --salmon: #d77e79;
+  --light-yellow: #ffebb1;
+  --green: #5d7a4d;
+  --background0: #1a2c24;
+  --background1: #804452;
 }
 
-.lightmode {
-  --green: #40a91d;
-  --green-light: #c9ffd9;
-  --green-dark: #236030;
-  --background0: #ffffff;
-  --background1: #e0e0e0;
-  
-}
-
-.darkmode {
-  --background0: #101010;
-  --background1: #204020;
-}
