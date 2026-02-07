@@ -1,13 +1,13 @@
 import Footer from "../components/Footer"
+import Nav from "../components/Nav"
 
-function App() {
+export default function App() {
 
   return (
     <>
+      <Nav />
       <p>Home page</p>
       <Footer />
     </>
   )
 }
-
-export default App

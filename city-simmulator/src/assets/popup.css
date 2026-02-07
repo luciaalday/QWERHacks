@@ -1,0 +1,11 @@
+@media (width <= 768px) {
+  .left-col {
+    width: 100vw;
+  }
+  .middle-col {
+    width: 100vw;
+  }
+  .right-col {
+    width: 100vw;
+  }
+}

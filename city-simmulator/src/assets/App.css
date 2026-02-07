@@ -1,17 +1,36 @@
 @import './index.css';
 
 html, body {
-  margin: 0;  
+  margin: 0;
+  background-color: var(--background0);
+  text-align: center;
+  transition: 0.3s ease;
+}
+
+h1 {
+  color: white;
 }
 
 footer {
-  background-color: var(--background1);
+  background-color: var(--cherry);
   color: var(--text-invert);
   text-align: center;
   padding: 20px;
 }
-
+footer button {
+  color: var(--text-invert);
+}
 button {
   background-color: transparent;
   border: none;
 }
+
+.header {
+  background-color: var(--cherry);
+  opacity: 95%;
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  padding: 10px;
+}
+
