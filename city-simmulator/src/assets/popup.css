@@ -1,11 +1,32 @@
 @media (width <= 768px) {
-  .left-col {
-    width: 100vw;
+  .left {
+    width: 90vw;
   }
-  .middle-col {
-    width: 100vw;
+  .middle {
+    width: 90vw;
   }
-  .right-col {
-    width: 100vw;
+  .right {
+    width: 90vw;
   }
+}
+@media (width > 768px) {
+  .left {
+    width: 15vw;
+  }
+  .middle {
+    width: 50vw;
+  }
+  .right {
+    width: 20vw;
+  }
+}
+
+.container {
+  display: flex;
+  padding: 2%;
+  gap: 2%;
+}
+
+.col {
+  border-radius: 10px;
 }

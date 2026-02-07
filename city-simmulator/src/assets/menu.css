@@ -1,0 +1,14 @@
+@import './index.css';
+
+.left, .right {
+  background-color: var(--background1);
+  padding: 20px;
+  margin: 0;
+}
+.middle {
+  background-color: transparent;
+  margin: 0;
+}
+.col {
+  border-radius: 10px;
+}
