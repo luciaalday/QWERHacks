@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 
 export default function Resources({ results, role, setRole }) {
-  const [roleAdvice, setRoleAdvice] = useState('');
+  const [adviceData, setAdviceData] = useState(null);
 
   useEffect(() => {
     if (!results?.current) return;
 
-    // Fetch role-specific advice from backend
+    // Fetch role-specific advice and links from backend
     const fetchAdvice = async () => {
       try {
         const res = await fetch('http://localhost:5000/get-role-advice', {
@@ -24,7 +24,7 @@ export default function Resources({ results, role, setRole }) {
         }
 
         const data = await res.json();
-        setRoleAdvice(data.advice);
+        setAdviceData(data);
       } catch (err) {
         console.error('Error fetching role advice:', err);
       }
@@ -55,10 +55,10 @@ export default function Resources({ results, role, setRole }) {
     </div>
     <div className='left col'>
         {/* Recommendation/Advice */}
-        {roleAdvice && (
+        {adviceData && (
           <div>
             <p>
-              {roleAdvice}
+              {adviceData.advice}
             </p>
           </div>
         )}
@@ -66,46 +66,15 @@ export default function Resources({ results, role, setRole }) {
 
     <div className='left col' style={{ marginTop: '20px' }}>
       <h3>Recommended resources</h3>
-      {results?.current && (() => {
-        const scores = results.current;
-        const categories = ["Livability", "Sustainability", "Resilience", "Equity"];
-        // find the lowest scoring category
-        const smallest = categories.reduce((minCat, cat) => (scores[cat] < scores[minCat] ? cat : minCat), categories[0]);
-
-        const resourcesMap = {
-          "Livability": [
-            { title: 'Community Organizing Guide', url: 'https://www.mobilisationlab.org' },
-            { title: 'Parks and Recreation Resources', url: 'https://www.nrpa.org' }
-          ],
-          "Sustainability": [
-            { title: 'EPA - Sustainable Management', url: 'https://www.epa.gov/sustainability' },
-            { title: 'ICLEI - Local Sustainability', url: 'https://iclei.org' }
-          ],
-          "Resilience": [
-            { title: 'FEMA - Ready', url: 'https://www.ready.gov' },
-            { title: 'UNDRR - Disaster Risk Reduction', url: 'https://www.undrr.org' }
-          ],
-          "Equity": [
-            { title: 'Urban Institute - Equity Resources', url: 'https://www.urban.org' },
-            { title: 'PolicyLink - Equity Tools', url: 'https://www.policylink.org' }
-          ]
-        };
-
-        const list = resourcesMap[smallest] || [];
-
-        return (
-          <div>
-            <p style={{ color: '#6b7280' }}>Your city scores lowest in <strong>{smallest}</strong>. Here are some resources to get started:</p>
-            <ul style={{ paddingLeft: '18px' }}>
-              {list.map((r) => (
-                <li key={r.url} style={{ marginBottom: '8px' }}>
-                  <a href={r.url} target="_blank" rel="noopener noreferrer">{r.title}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        );
-      })()}
+      {adviceData?.category && (
+        <div>
+          <p>Check out these links to get involved!</p>
+          <p style={{fontSize:'small'}}><i>Note these may be UCLA specific links</i></p>
+            {adviceData.links && adviceData.links.map((link, idx) => (
+              <a style={{textAlign:'left', fontSize:'small'}} key={idx} href={link.split(' (')[0]} target="_blank" rel="noopener noreferrer">{link}</a>
+            ))}
+        </div>
+      )}
     </div>
     </>
   );
