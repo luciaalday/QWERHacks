@@ -141,6 +141,9 @@ advice_map = {
 def get_recommendation(scores, role, year):
     categories = ["Livability", "Sustainability", "Resilience", "Equity"]
 
+    if all(scores[cat] >= 90 for cat in categories):
+        return "Great job! The city is thriving!"
+
     smallest = min(categories, key = lambda x: scores[x])
     advice = advice_map[smallest].get(role)
 
@@ -152,6 +155,227 @@ def get_recommendation(scores, role, year):
 
     sentence = f"As a {role.lower()}, {time_text}, you can help fix your city's low {smallest.lower()} by {advice}!"
     return sentence
+
+# based on the inputs, give recommendations on how to fix your lower score
+
+def city_alert(cities, scores):
+    categories = ["Livability", "Sustainability", "Resilience", "Equity"]
+
+    if all(scores[cat] >= 90 for cat in categories):
+        return "Perfect city! Try to maintain this balance!"
+    
+    smallest = min(categories, key = lambda x: scores[x])
+    
+    issue = ""
+
+    if smallest == "Livability":
+        if cities.get("air_quality") < 70: 
+            issue = "polluted air levels"
+        elif cities.get("inequality") > 40: 
+            issue = "a wide wealth gap"
+        elif cities.get("green_space") < 60: 
+            issue = "a lack of parks and green space"
+        elif cities.get("healthcare") < 55: 
+            issue = "poor access to medical services"
+        elif cities.get("education") < 60: 
+            issue = "low investment in schools"
+        else: 
+            issue = "the high cost of living"
+
+    elif smallest == "Sustainability":
+        if cities.get("energy_mix") < 50: 
+            issue = "heavy reliance on fossil fuels"
+        elif cities.get("green_space") < 60: 
+            issue = "insufficient urban canopy"
+        elif cities.get("water") < 60: 
+            issue = "fragile water security"
+        elif cities.get("climate_risk") > 50:
+            issue = "unaddressed environmental threats"
+        else: 
+            issue = "high road dependence"
+
+    elif smallest == "Resilience":
+        if cities.get("climate_risk") > 40: 
+            issue = "vulnerability to natural disasters"
+        elif cities.get("transit") < 50: 
+            issue = "a fragile transportation network"
+        elif cities.get("energy_mix") < 50: 
+            issue = "an unstable energy grid"
+        elif cities.get("job_diversity") < 45: 
+            issue = "an over-specialized, risky economy"
+        else: 
+            issue = "overwhelming population strain"
+
+    elif smallest == "Equity":
+        if cities.get("inequality") > 30: 
+            issue = "a massive wealth gap"
+        elif cities.get("healthcare") < 65: 
+            issue = "unequal access to medical care"
+        elif cities.get("cost_of_living") > 45: 
+            issue = "unaffordable housing and goods"
+        elif cities.get("education") < 65: 
+            issue = "barriers to quality schooling"
+        elif cities.get("job_diversity") < 50: 
+            issue = "a lack of diverse career paths"
+        else: 
+            issue = "an inequitable tax structure"
+    
+    return f"City Alert: {smallest} is low due to {issue}."
+
+# realistic snapshots of major metros (approximate values based on our research) + sample utopia
+
+real_cities = {
+    "New York, USA": {
+        "green_space": 40, 
+        "air_quality": 75, 
+        "water": 85, 
+        "climate_risk": 60,
+        "housing_density": 90,
+        "transit": 95,
+        "road_dependence": 20,
+        "energy_mix": 60,
+        "inequality": 80, 
+        "healthcare": 80, 
+        "education": 85, 
+        "population_growth": 20,
+        "job_diversity": 90, 
+        "cost_of_living": 95, 
+        "automation": 70, 
+        "tax_structure": 75
+    },
+
+    "Los Angeles, USA": {
+        "green_space": 35, 
+        "air_quality": 50, 
+        "water": 30, 
+        "climate_risk": 75,
+        "housing_density": 45, 
+        "transit": 40, 
+        "road_dependence": 90, 
+        "energy_mix": 65,
+        "inequality": 75,
+        "healthcare": 85, 
+        "education": 80, 
+        "population_growth": 30,
+        "job_diversity": 85, 
+        "cost_of_living": 90, 
+        "automation": 75,
+        "tax_structure": 60
+    },
+
+    "Chicago, USA": {
+        "green_space": 55, 
+        "air_quality": 65, 
+        "water": 90, 
+        "climate_risk": 40,
+        "housing_density": 60, 
+        "transit": 70, 
+        "road_dependence": 60, 
+        "energy_mix": 55,
+        "inequality": 70, 
+        "healthcare": 80, 
+        "education": 75, 
+        "population_growth": 15,
+        "job_diversity": 80, 
+        "cost_of_living": 70, 
+        "automation": 65, 
+        "tax_structure": 55
+    },
+
+    "New Delhi, India": {
+        "green_space": 50, 
+        "air_quality": 15, 
+        "water": 35, 
+        "climate_risk": 60,
+        "housing_density": 85, 
+        "transit": 65, 
+        "road_dependence": 50, 
+        "energy_mix": 30,
+        "inequality": 85, 
+        "healthcare": 45, 
+        "education": 55, 
+        "population_growth": 85,
+        "job_diversity": 70, 
+        "cost_of_living": 40, 
+        "automation": 50, 
+        "tax_structure": 40
+    },
+
+    "Jakarta, Indonesia": {
+        "green_space": 20, 
+        "air_quality": 30, 
+        "water": 25, 
+        "climate_risk": 95,
+        "housing_density": 80, 
+        "transit": 45, 
+        "road_dependence": 70, 
+        "energy_mix": 35,
+        "inequality": 65, 
+        "healthcare": 50, 
+        "education": 60, 
+        "population_growth": 70,
+        "job_diversity": 65, 
+        "cost_of_living": 45, 
+        "automation": 45, 
+        "tax_structure": 45
+    },
+
+    "Shanghai, China": {
+        "green_space": 45, 
+        "air_quality": 55, 
+        "water": 60, 
+        "climate_risk": 70,
+        "housing_density": 95, 
+        "transit": 90, 
+        "road_dependence": 30, 
+        "energy_mix": 45,
+        "inequality": 60, 
+        "healthcare": 75, 
+        "education": 90, 
+        "population_growth": 40,
+        "job_diversity": 85, 
+        "cost_of_living": 75, 
+        "automation": 90, 
+        "tax_structure": 50
+    },
+
+    "Seoul, South Korea": {
+        "green_space": 60, 
+        "air_quality": 60, 
+        "water": 85, "climate_risk": 40,
+        "housing_density": 90, 
+        "transit": 98, 
+        "road_dependence": 25, 
+        "energy_mix": 50,
+        "inequality": 55, 
+        "healthcare": 95, 
+        "education": 95, 
+        "population_growth": 10,
+        "job_diversity": 85, 
+        "cost_of_living": 80, 
+        "automation": 95, 
+        "tax_structure": 60
+    },
+
+    "Utopia": {
+        "green_space": 100, 
+        "air_quality": 100, 
+        "water": 100, 
+        "climate_risk": 0,
+        "housing_density": 70, 
+        "transit": 100, 
+        "road_dependence": 0, 
+        "energy_mix": 100,
+        "inequality": 0, 
+        "healthcare": 100, 
+        "education": 100, 
+        "population_growth": 50,
+        "job_diversity": 100, 
+        "cost_of_living": 10, 
+        "automation": 80, 
+        "tax_structure": 90
+    }
+}
 
 # this part is from gemini - how to implement flask with python to be used by react
 
