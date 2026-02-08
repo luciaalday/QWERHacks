@@ -43,14 +43,12 @@ export default function CityOutput({ results }) {
       <h4>Balancing Urban Evolution using Predictive Modeling</h4>
       {/* Current Year Display */}
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <h3 style={{ fontSize: '18px', fontWeight: 600, color: '#374151' }}>
-            Year {currentYear.year}
-          </h3>
+        <div>
+          <h3>{currentYear.year === 0 ? "Today" : `In ${currentYear.year} years...`}</h3>
         </div>
 
         {/* Metrics Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '16px', marginBottom: '24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(1, minmax(0, 1fr))', gap: '16px', marginBottom: '24px' }}>
           {metrics.map((metric) => {
             const value = currentYear[metric];
             const maxValue = 100;
