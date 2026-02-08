@@ -1,8 +1,8 @@
 export default function Footer() {
   return (
-    <footer>
-      <h5 style={{fontWeight:'light'}}>Lucia Alday, Aparna Petluri, Khan Tran</h5>
-      <h4>QWER Hacks &copy;2026</h4>
+    <footer style={{textAlign:'center'}}>
+      <h5 style={{fontWeight:'light', textAlign:'center', margin:'10px'}}>Lucia Alday, Aparna Petluri, Khanh Tran</h5>
+      <h4 style={{color:'white'}}>QWER Hacks &copy;2026</h4>
     </footer>
   )
 }

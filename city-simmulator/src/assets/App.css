@@ -8,10 +8,16 @@ html, body {
   transition: 0.3s ease;
   color: white;
   overflow-x: hidden;
+  font-family: "Oxygen";
 }
 h1 {
+  font-family: "figtree", sans-serif;
   margin-bottom: 0;
   padding-bottom: 0;
+}
+h2 {
+  font-family: "figtree", sans-serif;
+  font-size: 1.4em;
 }
 h3 {
   text-align: center;
@@ -22,6 +28,11 @@ h4 {
   font-weight: light;
   font-style: italic;
   color: #a6cb80
+}
+h5 {
+  text-align: left;
+  margin: 0;
+  padding: 0;
 }
 footer {
   background-color: var(--cherry);
@@ -36,11 +47,6 @@ button {
   background-color: transparent;
   border: none;
 }
-
-input[type="range"] {
-  accent-color: var(--accent0);
-}
-
 .header {
   background-color: var(--cherry);
   opacity: 95%;

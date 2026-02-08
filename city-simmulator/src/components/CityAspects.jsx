@@ -70,24 +70,25 @@ export default function CityAspects({
         <option value="Society">Society</option>
         <option value="Economy">Economy</option>
       </select>
+      <div style={{margin:'25px 0'}}>
       {viewSet === "Environment" &&
       <>
-      <p>Green space</p>
+      <h5>Green space</h5>
       <div className="slider-container">
         <input type="range" min="1" max="100" onChange={(e)=>setEnv1(e.target.value)} value={env1} class="slider"/>
         <p>{env1}</p>
       </div>
-      <p>Air quality</p>
+      <h5>Air quality</h5>
       <div className="slider-container">
         <input type="range" min="1" max="100" onChange={(e)=>setEnv2(e.target.value)} value={env2} class="slider"/>
         <p>{env2}</p>
       </div>
-      <p>Water</p>
+      <h5>Water</h5>
       <div className="slider-container">
         <input type="range" min="1" max="100" onChange={(e)=>setEnv3(e.target.value)} value={env3} class="slider"/>
         <p>{env3}</p>
       </div>
-      <p>Climate risk</p>
+      <h5>Climate risk</h5>
       <div className="slider-container">
         <input type="range" min="1" max="100" onChange={(e)=>setEnv4(e.target.value)} value={env4} class="slider"/>
         <p>{env4}</p>
@@ -96,22 +97,22 @@ export default function CityAspects({
       }
       {viewSet === "Infrastructure" &&
       <>
-      <p>Housing density</p>
+      <h5>Housing density</h5>
       <div className="slider-container">
         <input type="range" min="1" max="100" onChange={(e)=>setInfr1(e.target.value)} value={infr1} class="slider"/>
         <p>{infr1}</p>
       </div>
-      <p>Transit</p>
+      <h5>Transit</h5>
       <div className="slider-container">
         <input type="range" min="1" max="100" onChange={(e)=>setInfr2(e.target.value)} value={infr2} class="slider"/>
         <p>{infr2}</p>
       </div>
-      <p>Road dependence</p>
+      <h5>Road dependence</h5>
       <div className="slider-container">
         <input type="range" min="1" max="100" onChange={(e)=>setInfr3(e.target.value)} value={infr3} class="slider"/>
         <p>{infr3}</p>
       </div>
-      <p>Energy mix</p>
+      <h5>Energy mix</h5>
       <div className="slider-container">
         <input type="range" min="1" max="100" onChange={(e)=>setInfr4(e.target.value)} value={infr4} class="slider"/>
         <p>{infr4}</p>
@@ -120,22 +121,22 @@ export default function CityAspects({
       }
       {viewSet === "Society" &&
       <>
-      <p>Inequality</p>
+      <h5>Inequality</h5>
       <div className="slider-container">
         <input type="range" min="1" max="100" onChange={(e)=>setSoc1(e.target.value)} value={soc1} class="slider"/>
         <p>{soc1}</p>
       </div>
-      <p>Healthcare</p>
+      <h5>Healthcare</h5>
       <div className="slider-container">
         <input type="range" min="1" max="100" onChange={(e)=>setSoc2(e.target.value)} value={soc2} class="slider"/>
         <p>{soc2}</p>
       </div>
-      <p>Education</p>
+      <h5>Education</h5>
       <div className="slider-container">
         <input type="range" min="1" max="100" onChange={(e)=>setSoc3(e.target.value)} value={soc3} class="slider"/>
         <p>{soc3}</p>
       </div>
-      <p>Population growth</p>
+      <h5>Population growth</h5>
       <div className="slider-container">
         <input type="range" min="1" max="100" onChange={(e)=>setSoc4(e.target.value)} value={soc4} class="slider"/>
         <p>{soc4}</p>
@@ -143,29 +144,30 @@ export default function CityAspects({
       </>}
       {viewSet === "Economy" &&
       <>
-      <p>Job diversity</p>
+      <h5>Job diversity</h5>
       <div className="slider-container">
         <input type="range" min="1" max="100" onChange={(e)=>setEcon1(e.target.value)} value={econ1} class="slider"/>
         <p>{econ1}</p>
       </div>
-      <p>Cost of living</p>
+      <h5>Cost of living</h5>
       <div className="slider-container">
         <input type="range" min="1" max="100" onChange={(e)=>setEcon2(e.target.value)} value={econ2} class="slider"/>
         <p>{econ2}</p>
       </div>
-      <p>Automation</p>
+      <h5>Automation</h5>
       <div className="slider-container">
         <input type="range" min="1" max="100" onChange={(e)=>setEcon3(e.target.value)} value={econ3} class="slider"/>
         <p>{econ3}</p>
       </div>
-      <p>Tax structure</p>
+      <h5>Tax structure</h5>
       <div className="slider-container">
         <input type="range" min="1" max="100" onChange={(e)=>setEcon4(e.target.value)} value={econ4} class="slider"/>
         <p>{econ4}</p>
       </div>
       </>}
+      </div>
       <button className="go" onClick={onGenerateCity}>Create city!</button>
-      <hr></hr>
+      <hr style={{margin:'25px 0', color:'#a6c8b0'}}></hr>
       <select for="pre-built" onChange={(e) => setCity(e.target.value)}>
         <option value={"New York City, USA"}>New York City, USA</option>
         <option value={"Los Angeles, USA"}>Los Angeles, USA</option>
