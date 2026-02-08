@@ -35,9 +35,9 @@ export default function Resources({ results, role, setRole }) {
 
   if (!results) {
     return (
-      <div style={{ padding: '24px', background: 'linear-gradient(135deg, #f1f5f9 0%, #fef3c7 100%)', borderRadius: '8px', minHeight: '500px' }}>
-        <h2 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '24px', color: '#1f2937' }}>Resources</h2>
-        <p style={{ color: '#6b7280', fontSize: '14px' }}>Generate a city to see analysis results and recommendations</p>
+      <div className='left col'>
+        <h2>Resources</h2>
+        <p>Generate a city to see analysis results and recommendations</p>
       </div>
     );
   }
