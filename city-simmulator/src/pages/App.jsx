@@ -1,23 +1,26 @@
+import CityAspects from "../components/CityAspects"
+import CityOutput from "../components/CityOutput"
 import Footer from "../components/Footer"
 import Nav from "../components/Nav"
+import Resources from "../components/Resources"
 
 export default function App() {
 
   return (
     <>
-      <Nav />
+    <Nav />
     <div className="container">
       <div className="left col">
-        <p>left column</p>
+        <CityAspects/>
       </div>
       <div className="middle col">
-        <p>middle column</p>
+        <CityOutput />
       </div>
       <div className="right col">
-        <p>right column</p>
+        <Resources />
       </div>
     </div>
-      <Footer />
+    <Footer />
     </>
   )
 }

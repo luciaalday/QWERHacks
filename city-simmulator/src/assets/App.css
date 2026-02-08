@@ -5,9 +5,6 @@ html, body {
   background-color: var(--background0);
   text-align: center;
   transition: 0.3s ease;
-}
-
-h1 {
   color: white;
 }
 
@@ -23,6 +20,10 @@ footer button {
 button {
   background-color: transparent;
   border: none;
+}
+
+input[type="range"] {
+  accent-color: var(--accent0);
 }
 
 .header {
