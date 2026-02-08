@@ -35,7 +35,7 @@ export default function CityOutput({ results }) {
   }
 
   const currentYear = (results.timeline && results.timeline[currentIndex]) || { year: 0, Overall: 0, Livability: 0, Sustainability: 0, Resilience: 0, Equity: 0 };
-  const metrics = ['Equity', 'Livability', 'Resilience', 'Sustainability', 'Overall'];
+  const metrics = ['Equity', 'Livability', 'Resilience', 'Sustainability'];
 
   return (
     <div>
@@ -45,53 +45,60 @@ export default function CityOutput({ results }) {
           <h3>{currentYear.year === 0 ? "Today" : `In ${currentYear.year} years...`}</h3>
         </div>
 
-        {/* Metrics Grid */}
+        {/* Metrics Grid: each metric is a single row (name | progress bar | score) */}
         <div>
           {metrics.map((metric) => {
-            const value = currentYear[metric];
-            const maxValue = 100;
-            const percentage = (value / maxValue) * 100;
-            
-            // Color coding based on value
-            let barColor = '#57370d';
-            if (percentage > 60) barColor = '#3d8c3d';
-            else if (percentage > 30) barColor = '#a49a29';
+            const raw = currentYear[metric];
+            const valueNum = Number(raw) || 0;
+            const percentage = Math.max(0, Math.min(100, (valueNum / 100) * 100));
+
+            let barColor = '#e87047';
+            if (percentage > 80) barColor = '#549d36';
+            else if (percentage > 60) barColor = '#cfc539';
+            else if (percentage > 40) barColor = '#eeb94f';
+            else if (percentage > 20) barColor = '#ee983c';
 
             return (
-              <div key={metric} style={{ textAlign: 'center' }}>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>
-                      <div style={{ fontSize: '24px', fontWeight: 700, color: '#bfd3f0' }}>
-                        {value?.toFixed(1) ?? '0.0'}
-                      </div>
-                      <div style={{ fontSize: '12px', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                        {metric}
-                      </div>
+              <div key={metric} style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                <div style={{ width: '120px', fontSize: '12px', color: '#aeb5c4', textTransform: 'uppercase' }}>{metric}</div>
 
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div style={{ marginBottom: '8px' }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ width: '100%', backgroundColor: '#e5e7eb', borderRadius: '9999px', height: '10px' }}>
+                    <div
+                      style={{
+                        backgroundColor: barColor,
+                        height: '10px',
+                        borderRadius: '9999px',
+                        transition: 'width 500ms ease',
+                        width: `${percentage}%`
+                      }}
+                    />
+                  </div>
                 </div>
-                {/* Progress bar */}
-                <div style={{ width: '100%', backgroundColor: '#e5e7eb', borderRadius: '9999px', height: '8px' }}>
-                  <div
-                    style={{
-                      backgroundColor: barColor,
-                      height: '8px',
-                      borderRadius: '9999px',
-                      transition: 'all 500ms ease',
-                      width: `${Math.max(0, Math.min(100, percentage))}%`
-                    }}
-                  />
-                </div>
+
+                <div style={{ width: '64px', textAlign: 'right', fontSize: '14px', fontWeight: 700, color: barColor }}>{valueNum.toFixed(1)}</div>
               </div>
             );
           })}
         </div>
+
+        {/* Overall metric as its own div for separate styling */}
+        <div id="overall-metric">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: '20px', fontWeight: 700, color: '#bac7f1' }}>Overall</div>
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontSize: '28px', fontWeight: 800, color: '#bac7f1' }}>{(Number(currentYear.Overall) || 0).toFixed(1)}</div>
+              <div style={{ width: '200px', marginTop: '8px' }}>
+                <div style={{ width: '100%', backgroundColor: '#e5e7eb', borderRadius: '9999px', height: '12px' }}>
+                  <div style={{ backgroundColor: '#756bd7', height: '12px', borderRadius: '9999px', width: `${Math.max(0, Math.min(100, (Number(currentYear.Overall)||0)))}%` }} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <img
           src={
             currentYear.Overall <= 20
@@ -117,19 +124,19 @@ export default function CityOutput({ results }) {
                 width: index === currentIndex ? '24px' : '8px',
                 height: '8px',
                 borderRadius: '9999px',
-                backgroundColor: index === currentIndex ? '#2563eb' : '#d1d5db',
+                backgroundColor: index === currentIndex ? '#736bbd' : '#d1d5db',
                 border: 'none',
                 cursor: 'pointer',
                 transition: 'all 300ms ease',
               }}
               onMouseEnter={(e) => {
                 if (index !== currentIndex) {
-                  e.target.style.backgroundColor = '#9ca3af';
+                  e.target.style.backgroundColor = '#9d9ac9';
                 }
               }}
               onMouseLeave={(e) => {
                 if (index !== currentIndex) {
-                  e.target.style.backgroundColor = '#d1d5db';
+                  e.target.style.backgroundColor = '#d2d1db';
                 }
               }}
               title={`Year ${year.year}`}
