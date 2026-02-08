@@ -63,6 +63,50 @@ export default function Resources({ results, role, setRole }) {
           </div>
         )}
     </div>
+
+    <div className='left col' style={{ marginTop: '20px' }}>
+      <h3>Recommended resources</h3>
+      {results?.current && (() => {
+        const scores = results.current;
+        const categories = ["Livability", "Sustainability", "Resilience", "Equity"];
+        // find the lowest scoring category
+        const smallest = categories.reduce((minCat, cat) => (scores[cat] < scores[minCat] ? cat : minCat), categories[0]);
+
+        const resourcesMap = {
+          "Livability": [
+            { title: 'Community Organizing Guide', url: 'https://www.mobilisationlab.org' },
+            { title: 'Parks and Recreation Resources', url: 'https://www.nrpa.org' }
+          ],
+          "Sustainability": [
+            { title: 'EPA - Sustainable Management', url: 'https://www.epa.gov/sustainability' },
+            { title: 'ICLEI - Local Sustainability', url: 'https://iclei.org' }
+          ],
+          "Resilience": [
+            { title: 'FEMA - Ready', url: 'https://www.ready.gov' },
+            { title: 'UNDRR - Disaster Risk Reduction', url: 'https://www.undrr.org' }
+          ],
+          "Equity": [
+            { title: 'Urban Institute - Equity Resources', url: 'https://www.urban.org' },
+            { title: 'PolicyLink - Equity Tools', url: 'https://www.policylink.org' }
+          ]
+        };
+
+        const list = resourcesMap[smallest] || [];
+
+        return (
+          <div>
+            <p style={{ color: '#6b7280' }}>Your city scores lowest in <strong>{smallest}</strong>. Here are some resources to get started:</p>
+            <ul style={{ paddingLeft: '18px' }}>
+              {list.map((r) => (
+                <li key={r.url} style={{ marginBottom: '8px' }}>
+                  <a href={r.url} target="_blank" rel="noopener noreferrer">{r.title}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })()}
+    </div>
     </>
   );
 }
