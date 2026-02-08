@@ -17,14 +17,13 @@ export default function CityAspects({
 
   return (
     <div>
-      <p>City inputs</p>
+      <h2>Create your city!</h2>
       <select for="aspect-select" onChange={(e) => handleViewChange(e.target.value)}>
         <option value="Environment">Environment</option>
         <option value="Infrastructure">Infrastructure</option>
         <option value="Society">Society</option>
         <option value="Economy">Economy</option>
       </select>
-      <h2>{viewSet}</h2>
       {viewSet === "Environment" &&
       <>
       <p>Green space</p>

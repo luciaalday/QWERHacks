@@ -2,10 +2,12 @@
 
 html, body {
   margin: 0;
+  padding: 0;
   background-color: var(--background0);
   text-align: center;
   transition: 0.3s ease;
   color: white;
+  overflow-x: hidden;
 }
 
 footer {
@@ -31,8 +33,9 @@ input[type="range"] {
   opacity: 95%;
   position: sticky;
   top: 0;
-  width: 100vw;
+  width: 100%;
   padding: 10px;
+  box-sizing: border-box;
 }
 
 button.go {

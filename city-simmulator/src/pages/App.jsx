@@ -102,7 +102,7 @@ export default function App() {
         <CityOutput results={simResults} />
       </div>
       <div className="right col">
-        <Resources />
+        <Resources results={simResults} />
       </div>
     </div>
     <Footer />
