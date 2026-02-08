@@ -76,8 +76,6 @@ export default function App() {
 
   return (
     <>
-    <h1>UrbanIntel</h1>
-    <h4>Balancing Urban Evolution using Predictive Modeling</h4>
     <div className="container">
       <div className="left col">
         <CityAspects

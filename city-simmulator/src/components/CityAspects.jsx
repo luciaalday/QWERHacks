@@ -174,7 +174,7 @@ export default function CityAspects({
         <option value={"Jakarta, Indonesia"}>Jakarta, Indonesia</option>
         <option value={"Shanghai, China"}>Shanghai, China</option>
         <option value={"Seoul, South Korea"}>Seoul, South Korea</option>
-        <option value={"Utopia"}>Utopia</option>
+        {/**<option value={"Utopia"}>Utopia</option>*/}
       </select>
     </div>
   )

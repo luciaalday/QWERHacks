@@ -39,6 +39,8 @@ export default function CityOutput({ results }) {
 
   return (
     <div>
+      <h1>UrbanIntel</h1>
+      <h4>Balancing Urban Evolution using Predictive Modeling</h4>
       {/* Current Year Display */}
       <div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
@@ -55,14 +57,14 @@ export default function CityOutput({ results }) {
             const percentage = (value / maxValue) * 100;
             
             // Color coding based on value
-            let barColor = '#ef4444';
-            if (percentage > 60) barColor = '#22c55e';
-            else if (percentage > 30) barColor = '#eab308';
+            let barColor = '#57370d';
+            if (percentage > 60) barColor = '#3d8c3d';
+            else if (percentage > 30) barColor = '#a49a29';
 
             return (
               <div key={metric} style={{ textAlign: 'center' }}>
                 <div style={{ marginBottom: '8px' }}>
-                  <div style={{ fontSize: '24px', fontWeight: 700, color: '#1f2937' }}>
+                  <div style={{ fontSize: '24px', fontWeight: 700, color: '#bfd3f0' }}>
                     {value?.toFixed(1) ?? '0.0'}
                   </div>
                   <div style={{ fontSize: '12px', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
