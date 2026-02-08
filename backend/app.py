@@ -498,30 +498,28 @@ real_cities = {
 
 # this part is from gemini - how to implement flask with python to be used by react
 
+# --- FLASK IMPLEMENTATION ---
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app) # This allows React to talk to Python
+CORS(app) 
 
 @app.route('/simulate', methods=['POST'])
 def simulate():
     city_data = request.json
 
-    # Extract role from UI (default to General Resident if not provided)
+    # Extract role from UI
     role = city_data.get("role", "General City Resident")
-    # Remove role from the dict so ML model sees only numeric features
-    city_data.pop("role", None)
+    # Clean city_data for ML model
+    model_input = {k: v for k, v in city_data.items() if k in features}
 
-    initial_scores = score_city(city_data)
+    initial_scores = score_city(model_input)
     timeline_matrix = generate_timeline(initial_scores)
 
     history = []
     for i, row in enumerate(timeline_matrix):
         year = i * 10
-
-        # Create a mini-dictionary for just this decade's scores
-        # Index 0=Liv, 1=Sus, 2=Res, 3=Eq
         scores_this_decade = {
             "Livability": row[0],
             "Sustainability": row[1],
@@ -529,8 +527,8 @@ def simulate():
             "Equity": row[3]
         }
 
-        # Get the specific advice for this decade
-        decade_advice = get_recommendation(scores_this_decade, role, year)
+        # get_recommendation now returns {"advice_text": "...", "links": [...]}
+        rec_data = get_recommendation(scores_this_decade, role, year)
 
         history.append({
             "year": year,
@@ -539,7 +537,8 @@ def simulate():
             "Resilience": row[2],
             "Equity": row[3],
             "Overall": row[4],
-            "advice": decade_advice
+            "advice": rec_data["advice_text"], # The string for the timeline
+            "links": rec_data["links"]         # The links for that decade
         })
 
     return jsonify({
@@ -548,20 +547,26 @@ def simulate():
     })
 
 @app.route('/get-role-advice', methods=['POST'])
-def get_advice_by_role():
-    """Endpoint to get role-specific advice for current city scores."""
+def get_advice_by_role_route():
+    """Returns both the sentence AND the links for the Resources box."""
     data = request.json
     scores = data.get("scores", {})
     role = data.get("role", "General City Resident")
     
-    advice = get_role_advice(scores, role)
+    # We use get_recommendation here because it returns the full dict with links
+    # year=0 signifies 'currently'
+    result = get_recommendation(scores, role, year=0)
     
-    return jsonify({"advice": advice})
+    # Map the keys to match what Lucia's frontend is expecting
+    return jsonify({
+        "advice": result["advice_text"],
+        "links": result["links"]
+    })
 
+# If you have a specific button for this, point it to the same logic
 @app.route('/whatCanIdo', methods=['POST'])
-def whatCanIdo():
-    role = request.json
-
+def what_can_i_do():
+    return get_advice_by_role_route()
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
