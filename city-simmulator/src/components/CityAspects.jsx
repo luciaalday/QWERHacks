@@ -7,18 +7,12 @@ export default function CityAspects({
   econ1, setEcon1, econ2, setEcon2, econ3, setEcon3, econ4, setEcon4,
   onGenerateCity
 }) {
-  /** view set variables */
   const [viewSet, setViewSet] = useState("Environment");
-
-  const handleViewChange = (aspect) => {
-    setViewSet(aspect)
-  }
-
 
   return (
     <div>
       <h2>Create your city!</h2>
-      <select for="aspect-select" onChange={(e) => handleViewChange(e.target.value)}>
+      <select for="aspect-select" onChange={(e) => setViewSet(e.target.value)}>
         <option value="Environment">Environment</option>
         <option value="Infrastructure">Infrastructure</option>
         <option value="Society">Society</option>

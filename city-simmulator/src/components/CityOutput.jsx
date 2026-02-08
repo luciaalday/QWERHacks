@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react';
+import City1 from '../img/Artboard 1.png';
+import City2 from '../img/Artboard 2.png';
+import City3 from '../img/Artboard 3.png';
+import City4 from '../img/Artboard 4.png';
 
 export default function CityOutput({ results }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -35,9 +39,6 @@ export default function CityOutput({ results }) {
           <h3 style={{ fontSize: '18px', fontWeight: 600, color: '#374151' }}>
             Year {currentYear.year}
           </h3>
-          <div style={{ fontSize: '14px', color: '#6b7280' }}>
-            {currentIndex + 1} / {results.timeline.length}
-          </div>
         </div>
 
         {/* Metrics Grid */}
@@ -78,6 +79,20 @@ export default function CityOutput({ results }) {
             );
           })}
         </div>
+        <img
+          src={
+            currentYear.Overall <= 25
+              ? City4
+              : currentYear.Overall <= 50
+              ? City3
+              : currentYear.Overall <= 75
+              ? City2
+              : City1
+          }
+          width="100%"
+          alt={`City visualization for year ${currentYear.year}`}
+          style={{ borderRadius: '8px' }}
+        />
 
         {/* Timeline Progress Dots */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: '4px', marginTop: '24px', flexWrap: 'wrap' }}>
@@ -107,19 +122,6 @@ export default function CityOutput({ results }) {
               title={`Year ${year.year}`}
               aria-label={`Go to year ${year.year}`}
             />
-          ))}
-        </div>
-      </div>
-
-      {/* Current Stats Summary */}
-      <div style={{ backgroundColor: '#ffffff', borderRadius: '12px', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)', padding: '16px' }}>
-        <h4 style={{ fontSize: '14px', fontWeight: 600, color: '#4b5563', marginBottom: '12px' }}>Current State (Year 0)</h4>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '12px', fontSize: '14px' }}>
-          {Object.entries(results.current).map(([key, value]) => (
-            <div key={key} style={{ textAlign: 'center' }}>
-              <div style={{ fontWeight: 600, color: '#1f2937' }}>{value.toFixed(1)}</div>
-              <div style={{ fontSize: '12px', color: '#6b7280' }}>{key}</div>
-            </div>
           ))}
         </div>
       </div>
