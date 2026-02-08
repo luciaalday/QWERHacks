@@ -80,3 +80,10 @@ select {
 button:active {
   transform: scale(0.95);
 }
+a {
+  color: white;
+  font-size: 1em;
+}
+a:hover {
+
+}
