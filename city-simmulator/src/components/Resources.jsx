@@ -65,13 +65,14 @@ export default function Resources({ results, role, setRole }) {
     </div>
 
     <div className='left col' style={{ marginTop: '20px' }}>
-      <h3>Recommended resources</h3>
+      <h3>Check out these links to get involved!</h3>
+      <p style={{fontSize:'small'}}><i>Note these may be UCLA specific links</i></p>
       {adviceData?.category && (
         <div>
-          <p>Check out these links to get involved!</p>
-          <p style={{fontSize:'small'}}><i>Note these may be UCLA specific links</i></p>
             {adviceData.links && adviceData.links.map((link, idx) => (
-              <a style={{textAlign:'left', fontSize:'small'}} key={idx} href={link.split(' (')[0]} target="_blank" rel="noopener noreferrer">{link}</a>
+              <div key={idx}>
+                <a style={{textAlign:'left', fontSize:'small'}} href={link.split(' (')[0]} target="_blank" rel="noopener noreferrer">{link.split('(')[1]}</a>
+              </div>
             ))}
         </div>
       )}
