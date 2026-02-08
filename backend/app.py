@@ -8,10 +8,10 @@ features = [
     "job_diversity", "cost_of_living", "automation", "tax_structure"
 ]
 
-# generate synthetic cities dataset (10000 cities)
+# generate synthetic cities dataset (2000 cities)
 # each city having random starting conditions with all features ∈ [0,100]
 
-n = 10000
+n = 2000
 
 df = pd.DataFrame({f: np.random.uniform(0, 100, n) for f in features})
 
@@ -64,7 +64,7 @@ models = {}
 
 for name in targets:
     score = targets[name]
-    model = RandomForestRegressor(n_estimators = 200)
+    model = RandomForestRegressor(n_estimators = 100)
     model.fit(df, score)
     models[name] = model
 
@@ -112,6 +112,47 @@ def generate_timeline(initial_scores):
     
     return np.array(timeline)
 
+# advice based on segmentation segment
+
+advice_map = {
+    "Livability" : {
+        "General City Resident" : "organizing or participating in local events",
+        "Student" : "creating or participating in school clubs to initiate sustainability efforts",
+        "Business Owner" : "providing jobs and essential services (e.g. grocery stores, cafes)",
+        "Public Official" : "allocating tax revenue to public infrastructure spaces (e.g. libraries, healthcare, safe streets)"
+    }, "Sustainability" : {
+        "General City Resident" : "reducing water waste, choose public transit options",
+        "Student" : "encouraging recycling/composting programs and reusing materials",
+        "Business Owner" : "practicing being a “circular economy,” incentivizing reusing goods, reducing package, and sourcing locally to reduce transport emission",
+        "Public Official" : "passing zoning laws that prevent urban sprawl and mandating green building codes"
+    }, "Resilience" : {
+        "General City Resident" : "getting to know your neighbors to comfortably share resources in case of a disaster",
+        "Student" : "reviewing school policies in common crises",
+        "Business Owner" : "diversifying local supply chains so if one source fails, the city still has access to food or goods",
+        "Public Official" : "investing in hard infrastructure (e.g. sea walls, backup power grids, emergency response systems)"
+    }, "Equity" : {
+        "General City Resident" : "supporting local, diverse businesses and voting for inclusive housing policies",
+        "Student" : "learning digital literacy and budgeting advocacy",
+        "Business Owner" : "practicing fair-wage hiring and providing entry-level opportunities for marginalized groups",
+        "Public Official" : "implementing progressive policies (subsidized transit passes, affordable housing mandates)"
+    }
+}
+
+def get_recommendation(scores, role, year):
+    categories = ["Livability", "Sustainability", "Resilience", "Equity"]
+
+    smallest = min(categories, key = lambda x: scores[x])
+    advice = advice_map[smallest].get(role)
+
+    # dynamic sentence based on the year
+    if year == 0:
+        time_text = "currently"
+    else:
+        time_text = f"in year {year}"
+
+    sentence = f"As a {role.lower()}, {time_text}, you can help fix your city's low {smallest.lower()} by {advice}!"
+    return sentence
+
 # this part is from gemini - how to implement flask with python to be used by react
 
 from flask import Flask, request, jsonify
@@ -122,24 +163,38 @@ CORS(app) # This allows React to talk to Python
 
 @app.route('/simulate', methods=['POST'])
 def simulate():
-    # 1. Receive the slider values from the React UI
     city_data = request.json 
     
-    # 2. Run your functions
+    # Extract role from UI (default to General Resident if not provided)
+    role = city_data.get("role", "General City Resident")
+    
     initial_scores = score_city(city_data)
     timeline_matrix = generate_timeline(initial_scores)
     
-    # 3. Format the timeline so React can graph it easily
-    # We turn the matrix into a list of objects
     history = []
     for i, row in enumerate(timeline_matrix):
+        year = i * 10
+        
+        # Create a mini-dictionary for just this decade's scores
+        # Index 0=Liv, 1=Sus, 2=Res, 3=Eq
+        scores_this_decade = {
+            "Livability": row[0],
+            "Sustainability": row[1],
+            "Resilience": row[2],
+            "Equity": row[3]
+        }
+        
+        # Get the specific advice for this decade
+        decade_advice = get_recommendation(scores_this_decade, role, year)
+        
         history.append({
-            "year": i * 10,
+            "year": year,
             "Livability": row[0],
             "Sustainability": row[1],
             "Resilience": row[2],
             "Equity": row[3],
-            "Overall": row[4]
+            "Overall": row[4],
+            "advice": decade_advice  # <--- React can now show this!
         })
 
     return jsonify({
