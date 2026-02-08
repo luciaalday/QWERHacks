@@ -34,8 +34,7 @@
   border-radius: 10px;
 }
 .left:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 10px 10px #303030;
+  box-shadow: 0 0 10px 10px #4b342580;
 }
 
 .left {
@@ -59,7 +58,10 @@
 .slider-container input[type="range"] {
   width: 80%;
   background-color: transparent;
+  accent-color: #8094d4;
 }
 .slider-container p {
   width: 15%;
+  padding: 0;
+  margin: 0;
 }

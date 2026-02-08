@@ -39,18 +39,14 @@ export default function CityOutput({ results }) {
 
   return (
     <div>
-      <h1>UrbanIntel</h1>
-      <h4>Balancing Urban Evolution using Predictive Modeling</h4>
       {/* Current Year Display */}
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <h3 style={{ fontSize: '18px', fontWeight: 600, color: '#374151' }}>
-            Year {currentYear.year}
-          </h3>
+        <div>
+          <h3>{currentYear.year === 0 ? "Today" : `In ${currentYear.year} years...`}</h3>
         </div>
 
         {/* Metrics Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '16px', marginBottom: '24px' }}>
+        <div>
           {metrics.map((metric) => {
             const value = currentYear[metric];
             const maxValue = 100;
@@ -63,13 +59,22 @@ export default function CityOutput({ results }) {
 
             return (
               <div key={metric} style={{ textAlign: 'center' }}>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>
+                      <div style={{ fontSize: '24px', fontWeight: 700, color: '#bfd3f0' }}>
+                        {value?.toFixed(1) ?? '0.0'}
+                      </div>
+                      <div style={{ fontSize: '12px', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        {metric}
+                      </div>
+
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
                 <div style={{ marginBottom: '8px' }}>
-                  <div style={{ fontSize: '24px', fontWeight: 700, color: '#bfd3f0' }}>
-                    {value?.toFixed(1) ?? '0.0'}
-                  </div>
-                  <div style={{ fontSize: '12px', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    {metric}
-                  </div>
                 </div>
                 {/* Progress bar */}
                 <div style={{ width: '100%', backgroundColor: '#e5e7eb', borderRadius: '9999px', height: '8px' }}>

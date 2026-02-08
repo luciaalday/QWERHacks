@@ -3,6 +3,7 @@ import CityAspects from "../components/CityAspects"
 import CityOutput from "../components/CityOutput"
 import Footer from "../components/Footer"
 import Resources from "../components/Resources"
+import { FaTreeCity } from 'react-icons/fa6'
 
 export default function App() {
   /** environment variables */
@@ -76,6 +77,15 @@ export default function App() {
 
   return (
     <>
+    <div style={{display:'flex', alignItems:'center', padding:'20px', width:'100vw', backgroundColor:'#1a2c24b0'}}>
+      <div style={{display:'flex', alignItems:'center', height:'80px'}}>
+        <FaTreeCity size={80} />
+      </div>
+      <div>
+        <h1 style={{textAlign:'left', paddingLeft:'20px', margin: 0}}>UrbanIntel</h1>
+        <h4 style={{textAlign:'left', paddingLeft:'20px', margin: 0}}>Balancing Urban Evolution using Predictive Modeling</h4>
+      </div>
+    </div>
     <div className="container">
       <div className="left col">
         <CityAspects
