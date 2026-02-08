@@ -11,5 +11,16 @@
 }
 .col {
   border-radius: 10px;
-  
+
+}
+
+.slider-container {
+  display: flex;
+}
+.slider-container input[type="range"] {
+  width: 80%;
+  background-color: transparent;
+}
+.slider-container p {
+  width: 15%;
 }
