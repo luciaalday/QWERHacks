@@ -2,7 +2,6 @@ import { useState } from "react"
 import CityAspects from "../components/CityAspects"
 import CityOutput from "../components/CityOutput"
 import Footer from "../components/Footer"
-import Nav from "../components/Nav"
 import Resources from "../components/Resources"
 
 export default function App() {
@@ -28,6 +27,8 @@ export default function App() {
   const [econ4, setEcon4] = useState(50);
   /** simulation results */
   const [simResults, setSimResults] = useState(null);
+  /** selected role for tailored advice */
+  const [role, setRole] = useState('General City Resident');
 
   const handleGenerateCity = async () => {
     // map sliders to the feature names expected by the backend
@@ -57,7 +58,7 @@ export default function App() {
       const res = await fetch('http://localhost:5000/simulate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(cityData)
+        body: JSON.stringify({ ...cityData, role })
       })
 
       if (!res.ok) {
@@ -75,7 +76,8 @@ export default function App() {
 
   return (
     <>
-    <Nav />
+    <h1>UrbanIntel</h1>
+    <h4>Balancing Urban Evolution using Predictive Modeling</h4>
     <div className="container">
       <div className="left col">
         <CityAspects
@@ -102,7 +104,7 @@ export default function App() {
         <CityOutput results={simResults} />
       </div>
       <div className="right col">
-        <Resources results={simResults} />
+        <Resources results={simResults} role={role} setRole={setRole} />
       </div>
     </div>
     <Footer />

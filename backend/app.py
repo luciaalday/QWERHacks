@@ -156,6 +156,19 @@ def get_recommendation(scores, role, year):
     sentence = f"As a {role.lower()}, {time_text}, you can help fix your city's low {smallest.lower()} by {advice}!"
     return sentence
 
+def get_role_advice(scores, role):
+    """Get role-specific advice based on current city scores."""
+    categories = ["Livability", "Sustainability", "Resilience", "Equity"]
+
+    if all(scores[cat] >= 90 for cat in categories):
+        return "Great job! The city is thriving!"
+
+    smallest = min(categories, key = lambda x: scores[x])
+    advice = advice_map[smallest].get(role)
+
+    sentence = f"As a {role.lower()}, you can help fix your city's low {smallest.lower()} by {advice}!"
+    return sentence
+
 # based on the inputs, give recommendations on how to fix your lower score
 
 def city_alert(cities, scores):
@@ -342,7 +355,8 @@ real_cities = {
     "Seoul, South Korea": {
         "green_space": 60,
         "air_quality": 60,
-        "water": 85, "climate_risk": 40,
+        "water": 85,
+        "climate_risk": 40,
         "housing_density": 90,
         "transit": 98,
         "road_dependence": 25,
@@ -391,6 +405,8 @@ def simulate():
 
     # Extract role from UI (default to General Resident if not provided)
     role = city_data.get("role", "General City Resident")
+    # Remove role from the dict so ML model sees only numeric features
+    city_data.pop("role", None)
 
     initial_scores = score_city(city_data)
     timeline_matrix = generate_timeline(initial_scores)
@@ -418,13 +434,29 @@ def simulate():
             "Resilience": row[2],
             "Equity": row[3],
             "Overall": row[4],
-            "advice": decade_advice  # <--- React can now show this!
+            "advice": decade_advice
         })
 
     return jsonify({
         "current": initial_scores,
         "timeline": history
     })
+
+@app.route('/get-role-advice', methods=['POST'])
+def get_advice_by_role():
+    """Endpoint to get role-specific advice for current city scores."""
+    data = request.json
+    scores = data.get("scores", {})
+    role = data.get("role", "General City Resident")
+    
+    advice = get_role_advice(scores, role)
+    
+    return jsonify({"advice": advice})
+
+@app.route('/whatCanIdo', methods=['POST'])
+def whatCanIdo():
+    role = request.json
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

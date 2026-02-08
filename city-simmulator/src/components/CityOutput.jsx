@@ -17,24 +17,30 @@ export default function CityOutput({ results }) {
     return () => clearInterval(interval);
   }, [results?.timeline]);
 
+  // Reset to the beginning whenever a new simulation result arrives
+  useEffect(() => {
+    if (!results) return;
+    const reset = () => {
+      setCurrentIndex(0);
+    };
+    reset();
+  }, [results]);
+
   if (!results) {
     return (
       <div>
-        <h2>City Output</h2>
         <p>Generate a city to see results</p>
       </div>
     );
   }
 
-  const currentYear = results.timeline[currentIndex];
+  const currentYear = (results.timeline && results.timeline[currentIndex]) || { year: 0, Overall: 0, Livability: 0, Sustainability: 0, Resilience: 0, Equity: 0 };
   const metrics = ['Equity', 'Livability', 'Resilience', 'Sustainability', 'Overall'];
 
   return (
-    <div style={{ padding: '24px', background: 'linear-gradient(135deg, #f1f5f9 0%, #f0f9ff 100%)', borderRadius: '8px' }}>
-      <h2 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '24px', color: '#1f2937' }}>City Output</h2>
-
+    <div>
       {/* Current Year Display */}
-      <div style={{ backgroundColor: '#ffffff', borderRadius: '12px', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)', padding: '24px', marginBottom: '24px' }}>
+      <div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
           <h3 style={{ fontSize: '18px', fontWeight: 600, color: '#374151' }}>
             Year {currentYear.year}
@@ -81,11 +87,11 @@ export default function CityOutput({ results }) {
         </div>
         <img
           src={
-            currentYear.Overall <= 25
+            currentYear.Overall <= 20
               ? City4
-              : currentYear.Overall <= 50
+              : currentYear.Overall <= 40
               ? City3
-              : currentYear.Overall <= 75
+              : currentYear.Overall <= 60
               ? City2
               : City1
           }

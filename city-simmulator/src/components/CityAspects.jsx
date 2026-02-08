@@ -9,6 +9,58 @@ export default function CityAspects({
 }) {
   const [viewSet, setViewSet] = useState("Environment");
 
+  const setCity = async (inputCity) => {
+    if (inputCity === "New York City, USA") {
+      setEnv1(40);setEnv2(75);setEnv3(85);setEnv4(60);
+      setInfr1(90);setInfr2(95);setInfr3(95);setInfr4(20);
+      setSoc1(60);setSoc2(80);setSoc3(80);setSoc4(85);
+      setEcon1(90);setEcon2(95);setEcon3(70);setEcon4(75);
+    }
+    else if (inputCity === "Los Angeles, USA") {
+      setEnv1(35);setEnv2(50);setEnv3(30);setEnv4(75);
+      setInfr1(45);setInfr2(40);setInfr3(90);setInfr4(65);
+      setSoc1(75);setSoc2(85);setSoc3(80);setSoc4(30);
+      setEcon1(85);setEcon2(90);setEcon3(75);setEcon4(60);
+    }
+    else if (inputCity === "Chicago, USA") {
+      setEnv1(55);setEnv2(65);setEnv3(90);setEnv4(40);
+      setInfr1(60);setInfr2(70);setInfr3(60);setInfr4(55);
+      setSoc1(70);setSoc2(80);setSoc3(75);setSoc4(15);
+      setEcon1(80);setEcon2(70);setEcon3(65);setEcon4(55);
+    }
+    else if (inputCity === "New Delhi, India") {
+      setEnv1(50);setEnv2(15);setEnv3(35);setEnv4(60);
+      setInfr1(85);setInfr2(65);setInfr3(50);setInfr4(30);
+      setSoc1(85);setSoc2(55);setSoc3(45);setSoc4(85);
+      setEcon1(70);setEcon2(40);setEcon3(50);setEcon4(40);
+    }
+    else if (inputCity === "Jakarta, Indonesia") {
+      setEnv1(20);setEnv2(30);setEnv3(25);setEnv4(95);
+      setInfr1(80);setInfr2(45);setInfr3(70);setInfr4(35);
+      setSoc1(65);setSoc2(50);setSoc3(60);setSoc4(70);
+      setEcon1(65);setEcon2(45);setEcon3(45);setEcon4(45);
+    }
+    else if (inputCity === "Shanghai, China") {
+      setEnv1(45);setEnv2(55);setEnv3(60);setEnv4(70);
+      setInfr1(95);setInfr2(90);setInfr3(30);setInfr4(45);
+      setSoc1(60);setSoc2(75);setSoc3(90);setSoc4(40);
+      setEcon1(85);setEcon2(75);setEcon3(90);setEcon4(50);
+    }
+    else if (inputCity === "Seoul, South Korea") {
+      setEnv1(60);setEnv2(60);setEnv3(85);setEnv4(40);
+      setInfr1(90);setInfr2(98);setInfr3(25);setInfr4(50);
+      setSoc1(55);setSoc2(95);setSoc3(95);setSoc4(10);
+      setEcon1(85);setEcon2(80);setEcon3(95);setEcon4(60);
+    }
+    else {
+      setEnv1(100);setEnv2(100);setEnv3(100);setEnv4(0);
+      setInfr1(70);setInfr2(100);setInfr3(0);setInfr4(100);
+      setSoc1(0);setSoc2(100);setSoc3(100);setSoc4(50);
+      setEcon1(100);setEcon2(10);setEcon3(80);setEcon4(90);
+    }
+    onGenerateCity();
+  }
+
   return (
     <div>
       <h2>Create your city!</h2>
@@ -113,6 +165,17 @@ export default function CityAspects({
       </div>
       </>}
       <button className="go" onClick={onGenerateCity}>Create city!</button>
+      <hr></hr>
+      <select for="pre-built" onChange={(e) => setCity(e.target.value)}>
+        <option value={"New York City, USA"}>New York City, USA</option>
+        <option value={"Los Angeles, USA"}>Los Angeles, USA</option>
+        <option value={"Chicago, USA"}>Chicago, USA</option>
+        <option value={"New Delhi, India"}>New Delhi, India</option>
+        <option value={"Jakarta, Indonesia"}>Jakarta, Indonesia</option>
+        <option value={"Shanghai, China"}>Shanghai, China</option>
+        <option value={"Seoul, South Korea"}>Seoul, South Korea</option>
+        <option value={"Utopia"}>Utopia</option>
+      </select>
     </div>
   )
 }

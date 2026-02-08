@@ -1,48 +1,68 @@
 import { useState, useEffect } from 'react';
 
-export default function Resources({ results }) {
-  const [role, setRole] = useState('general');
+export default function Resources({ results, role, setRole }) {
+  const [roleAdvice, setRoleAdvice] = useState('');
 
   useEffect(() => {
-    if (!results?.timeline) return;
+    if (!results?.current) return;
 
-  }, [results?.timeline]);
+    // Fetch role-specific advice from backend
+    const fetchAdvice = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/get-role-advice', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            scores: results.current,
+            role: role
+          })
+        });
+
+        if (!res.ok) {
+          console.error('Failed to fetch role advice', res.statusText);
+          return;
+        }
+
+        const data = await res.json();
+        setRoleAdvice(data.advice);
+      } catch (err) {
+        console.error('Error fetching role advice:', err);
+      }
+    };
+
+    fetchAdvice();
+  }, [results, role]);
 
   if (!results) {
     return (
       <div style={{ padding: '24px', background: 'linear-gradient(135deg, #f1f5f9 0%, #fef3c7 100%)', borderRadius: '8px', minHeight: '500px' }}>
-        <h2 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '24px', color: '#1f2937' }}>Resources & Analysis</h2>
+        <h2 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '24px', color: '#1f2937' }}>Resources</h2>
         <p style={{ color: '#6b7280', fontSize: '14px' }}>Generate a city to see analysis results and recommendations</p>
       </div>
     );
   }
 
-  const currentYear = results.timeline[0];
-
   return (
-    <div>
+    <>
+    <div className='left col' style={{marginBottom:'20px'}}>
       <h3>What can I do as a...</h3>
-      <select for="role-select" onChange={(e) => setRole(e.target.value)}>
-        <option>Student</option>
-        <option>City Resident</option>
-        <option>Business Owner</option>
-        <option>Public Official</option>
+      <select id="role-select" value={role} onChange={(e) => setRole(e.target.value)}>
+        <option value="Student">Student</option>
+        <option value="General City Resident">City Resident</option>
+        <option value="Business Owner">Business Owner</option>
+        <option value="Public Official">Public Official</option>
       </select>
-
+    </div>
+    <div className='left col'>
         {/* Recommendation/Advice */}
-        {currentYear.advice && (
-          <div style={{ 
-            backgroundColor: '#fffbeb', 
-            borderLeft: '4px solid #f59e0b',
-            padding: '16px',
-            borderRadius: '6px',
-            marginBottom: '16px'
-          }}>
-            <p style={{ fontSize: '14px', color: '#78350f', margin: 0 }}>
-              {currentYear.advice}
+        {roleAdvice && (
+          <div>
+            <p>
+              {roleAdvice}
             </p>
           </div>
         )}
     </div>
+    </>
   );
 }
