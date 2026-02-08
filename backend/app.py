@@ -116,25 +116,121 @@ def generate_timeline(initial_scores):
 
 advice_map = {
     "Livability" : {
-        "General City Resident" : "organizing or participating in local events",
-        "Student" : "creating or participating in school clubs to initiate sustainability efforts",
-        "Business Owner" : "providing jobs and essential services (e.g. grocery stores, cafes)",
-        "Public Official" : "allocating tax revenue to public infrastructure spaces (e.g. libraries, healthcare, safe streets)"
+        "General City Resident" : {
+            "advice" : "organizing or participating in local events",
+            "info" : [
+                "https://www.eventbrite.com/b/ca--los-angeles/community/ (EventBrite)", 
+                "https://www.meetup.com/find/us--ca--los-angeles/ (MeetUp)" , 
+                "https://www.lapl.org/whats-on/calendar (LA Public Library)"
+            ]
+        }, "Student" : {
+            "advice:" : "creating or participating in school clubs to initiate sustainability efforts",
+            "info" : [
+                "https://esa.org/seeds/chapters/ (SEEDS Chapters)",
+                "https://projectgreenschools.org/start-a-ngss-chapter/ (National/International Green Schools Society)"
+            ]
+        }, "Business Owner" : {
+            "advice" : "providing jobs and essential services (e.g. grocery stores, cafes)",
+            "info" : [
+                "https://www.rd.usda.gov/about-rd/initiatives/healthy-food-financing-initiative (Healthy Food Financing Initiative)",
+                "https://www.sba.gov/funding-programs/loans (SBA Working Capital Pilot Program)",
+                "https://www.cleanenergyresourceteams.org/food-retail-improvement-and-development-grant-applications-due-march-10 (Food Retail Improvement and Development Grant (FRIDG))"
+            ]
+        }, "Public Official" : {
+            "advice" : "allocating tax revenue to public infrastructure spaces (e.g. libraries, healthcare, safe streets)",
+            "info" : [
+                "https://www.urbanlibraries.org/initiatives/advocacy (Urban Libraries Council)",
+                "https://www.astho.org/communications/blog/ (ASTHO - Public Health & Safety Policy)",
+                "https://www.smartgrowthamerica.org/programs-and-coalitions/national-complete-streets-coalition/ Smart Growth America - Complete Streets)"
+            ]
+        }
     }, "Sustainability" : {
-        "General City Resident" : "reducing water waste, choose public transit options",
-        "Student" : "encouraging recycling/composting programs and reusing materials",
-        "Business Owner" : "practicing being a “circular economy,” incentivizing reusing goods, reducing package, and sourcing locally to reduce transport emission",
-        "Public Official" : "passing zoning laws that prevent urban sprawl and mandating green building codes"
+        "General City Resident" : {
+            "advice" : "reducing water waste, choose public transit options",
+            "info" : [
+                "https://www.metro.net/riding/guide/ (LA Metro)",
+                "https://www.epa.gov/watersense/start-saving (US EPA)"
+            ]
+        }, "Student" : {
+            "advice" : "encouraging recycling/composting programs and reusing materials",
+            "info" : [
+                "https://calrecycle.ca.gov/recycle/schools/ (CA School Waste Reduction Program)"
+                "https://www.pepsicorecyclerally.com/ (Pepsico Recycle Rally Program)"
+            ]
+        }, "Business Owner" : {
+            "advice" : "practicing being a “circular economy,” incentivizing reusing goods, reducing package, and sourcing locally to reduce transport emission",
+            "info" : [
+                "https://www.ellenmacarthurfoundation.org/topics/circular-economy-introduction/overview (Circular Economy Introduction)",
+                "https://www.circle-economy.com/ (Circle Economy - Knowledge Hub)",
+                "https://exploreloop.com/en/ (Loop Global (Sustainable Package))"
+            ]
+        }, "Public Official" : {
+            "advice" : "passing zoning laws that prevent urban sprawl and mandating green building codes",
+            "info" : [
+                "https://www.smartgrowthamerica.org/programs-and-coalitions/center-for-zoning-solutions/ (Center for Zoning Solutions)",
+                "https://public-policies.usgbc.org/ (USGBC Policy Library)",
+                "https://progov21.org/ (ProGov21)"
+            ]
+        }
     }, "Resilience" : {
-        "General City Resident" : "getting to know your neighbors to comfortably share resources in case of a disaster",
-        "Student" : "reviewing school policies in common crises",
-        "Business Owner" : "diversifying local supply chains so if one source fails, the city still has access to food or goods",
-        "Public Official" : "investing in hard infrastructure (e.g. sea walls, backup power grids, emergency response systems)"
+        "General City Resident" : {
+            "advice" : "getting to know your neighbors to comfortably share resources in case of a disaster",
+            "info" : [
+                "https://www.washoecounty.gov/em/preparedness/GettingToKnowYourNeighbors.php (Getting to Know Your Neighbors Guide)",
+                "https://zcralliance.org/resources/item/guide-to-facilitating-community-led-disaster-risk-management/ (Guide to Facilitating Community-Led Disaster Risk Management)",
+                "https://www.redcross.org/get-help/how-to-prepare-for-emergencies/mobile-apps.html (Red Cross Mobile Emergency App)"
+            ]
+        }, "Student" : {
+            "advice" : "reviewing school policies in common crises",
+            "info" : [
+                "https://www.csba.org/en/ProductsAndServices/PolicyServices/Gamut/GamutPolicy#gsc.tab=0 (CA School Boards Association GAMUT Policy)",
+                "https://docs.goohttps//www.cde.ca.gov/re/lr/do/ (CA Department of Education School Distinct Organization)",
+                "https://www.cde.ca.gov/be/ms/mm/sbestudentmemberinfo.asp (CA State Board of Education Student Member Application)"
+            ]
+        }, "Business Owner" : {
+            "advice" : "diversifying local supply chains so if one source fails, the city still has access to food or goods",
+            "info" : [
+                "https://www.usdalocalfoodportal.com/ (USDA Local Food Directory)",
+                "https://www.thecommonmarket.org/ (The Common Market)",
+                "https://www.nist.gov/mep (NIST Manufacturing Extension Partnership)"
+            ]
+        }, "Public Official" : {
+            "advice" : "investing in hard infrastructure (e.g. sea walls, backup power grids, emergency response systems)",
+            "info" : [
+                "https://www.weforum.org/stories/2025/10/how-investing-in-urban-resilience-can-foster-sustainable-growth/ (The Resilience Dividend (World Economic Forum))",
+                "https://infrastructurereportcard.org/ (Infrastructure Report Card)",
+                "https://www.fema.gov/grants/mitigation/learn/hazard-mitigation (FEMA Hazard Mitigation Grant Program)"
+            ]
+        }
     }, "Equity" : {
-        "General City Resident" : "supporting local, diverse businesses and voting for inclusive housing policies",
-        "Student" : "learning digital literacy and budgeting advocacy",
-        "Business Owner" : "practicing fair-wage hiring and providing entry-level opportunities for marginalized groups",
-        "Public Official" : "implementing progressive policies (subsidized transit passes, affordable housing mandates)"
+        "General City Resident" : {
+            "advice" : "supporting local, diverse businesses and voting for inclusive housing policies",
+            "info" : [
+                "https://www.senate.gov/senators/senators-contact.htm (Senators)",
+                "https://www.nga.org/governors/#GovContact (Governors)",
+                "https://www.house.gov/representatives (House of Representatives)",
+                "https://www.usmayors.org/mayors/ (Mayors)"
+            ]
+        }, "Student" : {
+            "advice" : "learning digital literacy and budgeting advocacy",
+            "info" : [
+                "https://sustain.ucla.edu/student-organizations/#undergrad (UCLA Student Organizations)"
+            ]
+        }, "Business Owner" : {
+            "advice" : "practicing fair-wage hiring and providing entry-level opportunities for marginalized groups",
+            "info" : [
+                "https://www.dol.gov/agencies/eta/wotc (Work Opportunity Tax Credit (WOTC))", 
+                "https://www.nelp.org/explore-the-issues/workers-with-records/resources-for-employers/ (Fair Chance Hiring Resources (NELP))",
+                "https://askearn.org/ (Employer Assistance and Resource Network (EARN))"
+            ]
+        }, "Public Official" : {
+            "advice" : "implementing progressive policies (subsidized transit passes, affordable housing mandates)",
+            "info" : [
+                "https://www.countyhealthrankings.org/strategies-and-solutions/what-works-for-health/strategies/individual-incentives-for-public-transportation (Individual Incentives for Public Transportation)",
+                "https://allincities.org/toolkit (All-In Cities Policy Toolkit)",
+                "https://planning.lacity.gov/plans-policies/initiatives-policies/housing (Los Angeles City Planning Housing Policy)"
+            ]
+        }
     }
 }
 
@@ -142,10 +238,16 @@ def get_recommendation(scores, role, year):
     categories = ["Livability", "Sustainability", "Resilience", "Equity"]
 
     if all(scores[cat] >= 90 for cat in categories):
-        return "Great job! The city is thriving!"
+        return {
+            "advice_text" : "Great job! The city is thriving!",
+            "links" : ["https://www.un.org/sustainabledevelopment/takeaction/ (Global Goals: Take Action)"]
+        }
 
     smallest = min(categories, key = lambda x: scores[x])
-    advice = advice_map[smallest].get(role)
+    role_data = advice_map[smallest].get(role, {})
+    
+    advice = role_data.get("advice", "contributing to city growth")
+    links_list = role_data.get("links", [])
 
     # dynamic sentence based on the year
     if year == 0:
@@ -154,7 +256,10 @@ def get_recommendation(scores, role, year):
         time_text = f"in year {year}"
 
     sentence = f"As a {role.lower()}, {time_text}, you can help fix your city's low {smallest.lower()} by {advice}!"
-    return sentence
+    return {
+        "advice_text" : sentence,
+        "links" : links_list
+    }
 
 def get_role_advice(scores, role):
     """Get role-specific advice based on current city scores."""

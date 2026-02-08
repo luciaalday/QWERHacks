@@ -1,0 +1,12 @@
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 271-261-943
+ * Detected change in '/Users/aparnapetluri/Desktop/QWERHacks/backend/app.py', reloading
+ * Restarting with stat
+  File "/Users/aparnapetluri/Desktop/QWERHacks/backend/app.py", line 119
+    "General City Resident" : {}"organizing or participating in local events",
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: invalid syntax. Perhaps you forgot a comma?
