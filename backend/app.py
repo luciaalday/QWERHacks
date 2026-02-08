@@ -153,6 +153,72 @@ def get_recommendation(scores, role, year):
     sentence = f"As a {role.lower()}, {time_text}, you can help fix your city's low {smallest.lower()} by {advice}!"
     return sentence
 
+# based on the inputs, give recommendations on how to fix your lower score
+
+def city_alert(cities, scores):
+    categories = ["Livability", "Sustainability", "Resilience", "Equity"]
+
+    if all(scores[cat] >= 90 for cat in categories):
+        return "Perfect city! Try to maintain this balance!"
+    
+    smallest = min(categories, key = lambda x: scores[x])
+    
+    issue = ""
+
+    if smallest == "Livability":
+        if cities.get("air_quality") < 70: 
+            issue = "polluted air levels"
+        elif cities.get("inequality") > 40: 
+            issue = "a wide wealth gap"
+        elif cities.get("green_space") < 60: 
+            issue = "a lack of parks and green space"
+        elif cities.get("healthcare") < 55: 
+            issue = "poor access to medical services"
+        elif cities.get("education") < 60: 
+            issue = "low investment in schools"
+        else: 
+            issue = "the high cost of living"
+
+    elif smallest == "Sustainability":
+        if cities.get("energy_mix") < 50: 
+            issue = "heavy reliance on fossil fuels"
+        elif cities.get("green_space") < 60: 
+            issue = "insufficient urban canopy"
+        elif cities.get("water") < 60: 
+            issue = "fragile water security"
+        elif cities.get("climate_risk") > 50:
+            issue = "unaddressed environmental threats"
+        else: 
+            issue = "high road dependence"
+
+    elif smallest == "Resilience":
+        if cities.get("climate_risk") > 40: 
+            issue = "vulnerability to natural disasters"
+        elif cities.get("transit") < 50: 
+            issue = "a fragile transportation network"
+        elif cities.get("energy_mix") < 50: 
+            issue = "an unstable energy grid"
+        elif cities.get("job_diversity") < 45: 
+            issue = "an over-specialized, risky economy"
+        else: 
+            issue = "overwhelming population strain"
+
+    elif smallest == "Equity":
+        if cities.get("inequality") > 30: 
+            issue = "a massive wealth gap"
+        elif cities.get("healthcare") < 65: 
+            issue = "unequal access to medical care"
+        elif cities.get("cost_of_living") > 45: 
+            issue = "unaffordable housing and goods"
+        elif cities.get("education") < 65: 
+            issue = "barriers to quality schooling"
+        elif cities.get("job_diversity") < 50: 
+            issue = "a lack of diverse career paths"
+        else: 
+            issue = "an inequitable tax structure"
+    
+    return f"City Alert: {smallest} is low due to {issue}."
+
 # this part is from gemini - how to implement flask with python to be used by react
 
 from flask import Flask, request, jsonify
