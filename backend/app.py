@@ -141,6 +141,9 @@ advice_map = {
 def get_recommendation(scores, role, year):
     categories = ["Livability", "Sustainability", "Resilience", "Equity"]
 
+    if all(scores[cat] >= 90 for cat in categories):
+        return "Great job! The city is thriving!"
+
     smallest = min(categories, key = lambda x: scores[x])
     advice = advice_map[smallest].get(role)
 
