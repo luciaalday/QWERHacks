@@ -262,17 +262,28 @@ def get_recommendation(scores, role, year):
     }
 
 def get_role_advice(scores, role):
-    """Get role-specific advice based on current city scores."""
+    """Get role-specific advice and info links based on current city scores."""
     categories = ["Livability", "Sustainability", "Resilience", "Equity"]
 
     if all(scores[cat] >= 90 for cat in categories):
-        return "Great job! The city is thriving!"
+        return {
+            "advice": "Great job! The city is thriving!",
+            "links": [],
+            "category": None
+        }
 
     smallest = min(categories, key = lambda x: scores[x])
-    advice = advice_map[smallest].get(role)
-
-    sentence = f"As a {role.lower()}, you can help fix your city's low {smallest.lower()} by {advice}!"
-    return sentence
+    role_data = advice_map[smallest].get(role, {})
+    
+    advice_text = role_data.get("advice", "contributing to city growth")
+    info_links = role_data.get("info", [])
+    
+    sentence = f"As a {role.lower()}, you can help fix your city's low {smallest.lower()} by {advice_text}!"
+    return {
+        "advice": sentence,
+        "links": info_links,
+        "category": smallest
+    }
 
 # based on the inputs, give recommendations on how to fix your lower score
 
@@ -548,20 +559,13 @@ def simulate():
 
 @app.route('/get-role-advice', methods=['POST'])
 def get_advice_by_role_route():
-    """Returns both the sentence AND the links for the Resources box."""
+    """Returns advice text, info links, and category from advice_map."""
     data = request.json
     scores = data.get("scores", {})
     role = data.get("role", "General City Resident")
     
-    # We use get_recommendation here because it returns the full dict with links
-    # year=0 signifies 'currently'
-    result = get_recommendation(scores, role, year=0)
-    
-    # Map the keys to match what Lucia's frontend is expecting
-    return jsonify({
-        "advice": result["advice_text"],
-        "links": result["links"]
-    })
+    result = get_role_advice(scores, role)
+    return jsonify(result)
 
 # If you have a specific button for this, point it to the same logic
 @app.route('/whatCanIdo', methods=['POST'])
